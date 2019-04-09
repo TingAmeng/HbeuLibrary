@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:id="@+id/lend_item_swipe"
+    swipe:leftEdgeSwipeOffset="0dp"
+    swipe:rightEdgeSwipeOffset="0dp">
+
+    <!--BottomViews-->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="160dp"
+        android:layout_height="80dp">
+
+        <TextView
+            android:id="@+id/lend_delete"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:text="删  除"
+            android:textColor="@color/whiteText"
+            android:textSize="20sp"
+            android:background="@color/color_item_delete"
+            android:clickable="true"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/lend_set_top"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:text="置  顶"
+            android:textColor="@color/whiteText"
+            android:textSize="20sp"
+            android:background="@color/color_setTop"
+            android:gravity="center"
+            android:clickable="true"/>
+
+    </LinearLayout>
+
+    <!--SuefaceView-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/selector_item">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="6">
+
+            <TextView
+                android:id="@+id/lend_book_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp"
+                android:text="四个春天"
+                android:textSize="15sp"
+                swipe:layout_constraintLeft_toLeftOf="parent"
+                swipe:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/lend_book_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="作者：陆庆乾"
+                android:textSize="12sp"
+                swipe:layout_constraintTop_toBottomOf="@+id/lend_book_name"
+                swipe:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/lend_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2019-4-8"
+                android:textSize="10sp"
+                swipe:layout_constraintRight_toRightOf="parent"
+                swipe:layout_constraintTop_toTopOf="parent"
+                swipe:layout_constraintBottom_toBottomOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/lend_status"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="已  借"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_forward"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</com.daimajia.swipe.SwipeLayout>

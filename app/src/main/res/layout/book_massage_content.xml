@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/book_massge_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="作者："/>
+
+    <TextView
+        android:id="@+id/book_massge_publish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="出版社："/>
+
+    <TextView
+        android:id="@+id/book_massge_publishtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="出版时间："/>
+
+    <TextView
+        android:id="@+id/book_massge_pages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="页数："/>
+
+    <TextView
+        android:id="@+id/book_massge_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="价格："/>
+
+    <TextView
+        android:id="@+id/book_massge_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="装帧"/>
+
+    <TextView
+        android:id="@+id/book_massge_IBSN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IBSN:"/>
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="可借数目："/>
+
+    <TextView
+        android:id="@+id/book_massge_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="简介："/>
+
+</LinearLayout>

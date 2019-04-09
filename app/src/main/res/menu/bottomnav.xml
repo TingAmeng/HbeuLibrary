@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_nav_search"
+        android:icon="@drawable/ic_bottom_nav_search"
+        android:title="@string/bottom_nav_search"/>
+
+    <item
+        android:id="@+id/bottom_nav_book"
+        android:icon="@drawable/ic_book_heart"
+        android:title="@string/bottom_nav_book"/>
+
+    <item
+        android:id="@+id/bottom_nav_thinks"
+        android:icon="@drawable/ic_bottom_nav_book"
+        android:title="@string/bottom_nav_lends"/>
+
+    <item
+        android:id="@+id/bottom_nav_my"
+        android:icon="@drawable/ic_bottom_nav_my"
+        android:title="@string/bottom_nav_my"/>
+
+</menu>
