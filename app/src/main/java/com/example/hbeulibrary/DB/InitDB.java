@@ -6,6 +6,7 @@ import org.litepal.LitePal;
 public class InitDB {
 
     public static void initDB(){
+        //调用LitePal的getDatabase()方法，数据库自动创建
         LitePal.getDatabase();
         Book book1 = new Book();
         book1.setBookImageId(R.drawable.yuyanc);
@@ -215,6 +216,10 @@ public class InitDB {
                 "才能充分发挥出大国的国家竞争力，最终提升全体人民的公共利益。");
         book13.save();
 
+        User user1 = new User();
+        user1.setAccount("admin");
+        user1.setPassword("admin");
+        user1.save();
     }
 
 }

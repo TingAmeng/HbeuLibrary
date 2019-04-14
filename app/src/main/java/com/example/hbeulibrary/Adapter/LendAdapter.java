@@ -20,11 +20,11 @@ import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
+
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class LendAdapter extends BaseSwipeAdapter {
     private Context mContext;
@@ -38,13 +38,6 @@ public class LendAdapter extends BaseSwipeAdapter {
         this.mContext = context;
         this.mLendList = list;
         mInflater = LayoutInflater.from(mContext);
-        //LendFragment lendFragment = new LendFragment();
-        //getLend();
-//        if (mLendList.isEmpty()) {
-//            lendFragment.isListNull();
-//        } else {
-//            lendFragment.listNoNull();
-//        }
     }
 
     @Override
@@ -168,4 +161,8 @@ public class LendAdapter extends BaseSwipeAdapter {
 //        editor.apply();
 //
 //    }
+
+    public void setLendList(List<Lend> list){
+        mLendList = list;
+    }
 }

@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.hbeulibrary.DB.Book;
 import com.example.hbeulibrary.DB.Lend;
 import com.example.hbeulibrary.fragments.CollectFragment;
+import com.example.hbeulibrary.fragments.LendFragment;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class BookMassageActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,6 +55,7 @@ public class BookMassageActivity extends AppCompatActivity implements View.OnCli
     private ListView mListView;
     private Book book;
     private List<Lend> lendList = new ArrayList<>();
+    private CollectFragment collectFragment;
 
 
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
@@ -258,7 +261,7 @@ public class BookMassageActivity extends AppCompatActivity implements View.OnCli
     private void lendBook(){
         Lend lend = new Lend();
         Date mDate = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd/hh:mm E");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd E");
         String time = sdf.format(mDate);
         lend.setUserId(1);
         lend.setBookId(book.getId());

@@ -6,18 +6,21 @@ package com.example.hbeulibrary.Util;
 import android.app.Application;
 import android.content.Context;
 
+import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyApplication extends LitePalApplication {
+public class MyApplication extends Application {
     public static Context context;
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        //调用LitePal的初始化方法 ，解决 冲突
+        LitePal.initialize(context);
     }
 
     public static Context getContext(){
