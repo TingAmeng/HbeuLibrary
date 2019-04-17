@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.hbeulibrary.Adapter.CollectAdapter;
 import com.example.hbeulibrary.DB.Book;
@@ -44,10 +46,11 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
     private RecyclerView recyclerView;
     private LinearLayout llEidt;
-    private ImageView editButton;
+    private ImageButton btnEdit;
     private Button cancelButton;
     private Button selAllBtn;
     private Button delBtn;
+    private TextView nullText;
     //用来记录 selAllBtn 的点击
     private boolean isClicked = false;
     //CheckBox checkBox;
@@ -65,30 +68,31 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_collect,container,false);
         mContext = getActivity();
         recyclerView = (RecyclerView) view.findViewById(R.id.collect_rl);
-        editButton = (ImageView) getActivity().findViewById(R.id.title_edit_button);
+        btnEdit = (ImageButton) getActivity().findViewById(R.id.title_edit_button);
         llEidt = (LinearLayout) view.findViewById(R.id.ll_edit);
         cancelButton = (Button) view.findViewById(R.id.btn_cancel);
         selAllBtn = (Button) view.findViewById(R.id.btn_sel_all);
         delBtn = (Button) view.findViewById(R.id.btn_del);
+        nullText = (TextView) view.findViewById(R.id.text_null);
 
-        //View view1 = LayoutInflater.from(mContext).inflate(R.layout.collect_item,container,false);
-        //checkBox = (CheckBox) view.findViewById(R.id.collect_check_box);
-
-        editButton.setOnClickListener(this);
+        btnEdit.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
         selAllBtn.setOnClickListener(this);
         delBtn.setOnClickListener(this);
-        Log.d("TAG", "onCreateView: ");
+
         bookList.clear();//清空list数据 ，避免重复加载
         //瀑布流布局,两个参数（布局的列数，排列方向）
         initCollect();   //添加  list 数据
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager
-                (3,StaggeredGridLayoutManager.VERTICAL);
-        adapter = new CollectAdapter(bookList);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-
-
+        if (bookList.isEmpty()) {
+            nullText.setVisibility(View.VISIBLE);
+        } else {
+            nullText.setVisibility(View.GONE);
+            StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager
+                    (3, StaggeredGridLayoutManager.VERTICAL);
+            adapter = new CollectAdapter(bookList);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(adapter);
+        }
         return view;
     }
 
@@ -100,8 +104,9 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
                 llEidt.setVisibility(View.VISIBLE);
                 adapter.setCheckBoxVisible();
                 adapter.notifyDataSetChanged();
-                //清空deList;
+                //清空deList、deListPosition;
                 adapter.setDeList();
+                adapter.setDeListPosition();
                 break;
             //全选
             case R.id.btn_sel_all:
@@ -120,6 +125,10 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
             //删除
             case R.id.btn_del:
                 delCollect();
+                if (bookList.isEmpty()) {  //如果 bookList 没有收藏书籍
+                    nullText.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
                 llEidt.setVisibility(View.GONE);
                 adapter.setCheckBoxGone();
                 adapter.notifyDataSetChanged();
@@ -137,7 +146,7 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
 
         }
     }
-
+    // 第一次 加载  需要从 pref 中获取用户 收藏书单 信息
     // 依据 pref 中的 书目id 实例化 Book 并添加到bookList中
     private void initCollect(){
         long[] ids = new long[20];
@@ -157,6 +166,7 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
             }
         }
         //获得 收藏 中的 Book实例，并放入bookList
+        bookList.clear();
         bookList = LitePal.findAll(Book.class,ids);
     }
 
@@ -164,7 +174,6 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
     public void delCollect() {
         deList = adapter.getDeList();
         deListPosition = adapter.ItemPositionList();
-        //mContext = MyApplication.getContext();
         editor = getActivity().getSharedPreferences("user1collect",Context.MODE_PRIVATE).edit();
         for (int i = 0; i < deList.size(); i++) {
             editor.remove(deList.get(i));
@@ -172,12 +181,15 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
         editor.apply();
         //因为 list.remove() 删除元素后，后面元素会自动向前移位，删除多个元素的话
         //必须 倒序 删除，这样前面删除的元素不会影响后面删除的元素
-        for (int i = deListPosition.size()-1; i >= 0; i--) {
+        // List 中 没有随机删除 index的直接方法，如果你随机勾选 多个item, 用remove方法 删除时，会出错，
+        // 每一次 remove 过后，List 中的元素重新排序。
+        BubbleSort(deListPosition);
+        for (int i = 0; i < deListPosition.size(); i++) { //动态移除 bookList 中的数据，不再去 pref 文件中获取
             int mPosition = deListPosition.get(i);
             bookList.remove(mPosition);
         }
-//        bookList.removeAll(deListPosition);
-//        adapter.notifyDataSetChanged();
+
+
     }
 
     @Override
@@ -191,25 +203,28 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
         Log.d("TAG", "onResume ");
     }
 
-    //@Override
-    //此方法 每次切换回来后会重新调用，hidden分别是否重新回来
-    //由于viewpager的预加载机制,在viewpager里面的fragment
-    // 其生命周期会发生混乱而且onHiddenChanged不起作用,
-    // 例如onresume方法在没有用户可见的情况下就会调用
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        if (hidden) {
-//            return;
-//        } else {
-//            Log.d("TAG", "onHiddenChanged: ");
-//            adapter.notifyDataSetChanged();
-//        }
-//    }
 
-    //
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
+    }
+
+    /**
+     *
+     * 将list  中的元素的值 从大到小排序
+     * */
+    private void BubbleSort(List<Integer> list){
+        if (list.size() >= 2) {
+            for (int i = 0; i < list.size(); i++) {
+                for (int j = list.size() - 1; j > i; j--) {
+                    if (list.get(j) > list.get(j-1)) {
+                        int t = list.get(j-1);
+                        list.set(j-1,list.get(j));
+                        list.set(j,t);
+                    }
+                }
+            }
+        }
     }
 }

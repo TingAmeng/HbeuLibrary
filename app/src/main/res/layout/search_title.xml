@@ -26,34 +26,30 @@
         android:layout_marginRight="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:clickable="true">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/title_search_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_title_search_unpress"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
+            android:background="@drawable/selector_clicked"
             android:visibility="gone"/>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/title_edit_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_title_delete"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
+            android:background="@drawable/selector_clicked"
             android:visibility="gone"/>
 
-        <ImageView
-            android:id="@+id/title_lend_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
+        <ImageButton
+            android:id="@+id/title_refresh_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_refresh"
+            android:background="@drawable/selector_clicked"
             android:visibility="gone"/>
 
     </RelativeLayout>

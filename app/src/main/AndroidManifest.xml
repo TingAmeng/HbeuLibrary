@@ -10,8 +10,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RePwdActivity"></activity>
-        <activity android:name=".loginActivity">
+        <activity android:name=".SearchActivity"></activity>
+        <activity
+            android:name=".ForgetPwdActivity"
+            android:label="@string/title_activity_reset" />
+        <activity
+            android:name=".RegisterActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".RePwdActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".loginActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".BookMassageActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

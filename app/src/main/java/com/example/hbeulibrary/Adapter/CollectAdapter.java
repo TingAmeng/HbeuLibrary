@@ -1,6 +1,7 @@
 package com.example.hbeulibrary.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.hbeulibrary.BookMassageActivity;
 import com.example.hbeulibrary.DB.Book;
 import com.example.hbeulibrary.MainActivity;
 import com.example.hbeulibrary.R;
@@ -32,7 +34,7 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.ViewHold
     //记录当前点击的item
     private int position;
     //记录要删除的书目item
-    private List<String> deList;
+    private List<String> deList = new ArrayList<>();
     //记录要删除的位置
     private List<Integer> deListPosition = new ArrayList<>();
     //记录checkBox的隐藏状态
@@ -74,19 +76,11 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.ViewHold
             mContext = viewGroup.getContext();
         }
         setDeList(); //初始化 deList<>,记录CheckBox 选中的 对应的bookid;
-        setItemPositionList(); //初始化List 记录 CheckBox选中的item位置
+        setDeListPosition(); //初始化List 记录 CheckBox选中的item位置
         //加载fruit_item布局 传入到vieHolder中
         View view = LayoutInflater.from(mContext).inflate(R.layout.collect_item,viewGroup,false);
 
         final ViewHolder viewHolder = new ViewHolder(view);
-        viewHolder.collectView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                position = viewHolder.getAdapterPosition();
-                Book book = mBookList.get(position);
-                Toast.makeText(mContext,book.getBookName(),Toast.LENGTH_SHORT).show();
-            }
-        });
         viewHolder.bookCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -103,6 +97,19 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.ViewHold
                     Integer mPosition = position;
                     deListPosition.remove(mPosition);
                 }
+            }
+        });
+        //点击图片  查看详细 书目信息
+        viewHolder.bookImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = viewHolder.getAdapterPosition();
+                Book book = mBookList.get(position);
+                Toast.makeText(v.getContext(),book.getBookName(),
+                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, BookMassageActivity.class);
+                intent.putExtra("book_data",book);
+                mContext.startActivity(intent);
             }
         });
         return viewHolder;
@@ -141,9 +148,11 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.ViewHold
     }
 
     public void setDeList(){
-        deList = new ArrayList<>();
-        //这里千万不能这样初始化
-        //deList = null;   不能设为空。
+        deList.clear();
+        //这里千万不能这样初始化 deList = null;   不能设为空。
+    }
+    public void setDeListPosition() {
+        deListPosition.clear();
     }
 
     public List<Integer> ItemPositionList(){
@@ -151,9 +160,6 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.ViewHold
 
     }
 
-    public void setItemPositionList(){
-        deListPosition = new ArrayList<>();
-    }
     public void setCheckBoxGone(){
         isGone = false;
     }

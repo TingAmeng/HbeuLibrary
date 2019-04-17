@@ -59,7 +59,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
         QMUICommonListItemView secondItem = mGroupListView1.createItemView(
                 ContextCompat.getDrawable(getContext(),R.drawable.ic_exit),
-                "退出登录", null,
+                "退出程序", null,
                 QMUICommonListItemView.HORIZONTAL,
                 QMUICommonListItemView.ACCESSORY_TYPE_NONE
         );
@@ -91,7 +91,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         Intent intent = new Intent(getActivity(), RePwdActivity.class);
                         startActivity(intent);
 
-                    } else if (text.equals("退出登录")) {
+                    } else if (text.equals("退出程序")) {
                         //Toast.makeText(getContext(),"退出登录",Toast.LENGTH_SHORT).show();
                         ActivityCollector.finishAll();
 

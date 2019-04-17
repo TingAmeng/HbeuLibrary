@@ -3,7 +3,6 @@ package com.example.hbeulibrary;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -77,6 +76,7 @@ public class RePwdActivity extends BaseActivity {
             // 跳转至 loginActivity
             Intent intent = new Intent(this, loginActivity.class);
             startActivity(intent);
+            Toast.makeText(this,"请重新登录",Toast.LENGTH_SHORT).show();
             ActivityCollector.finishAll();  //销毁 所有Activity
         } else {
             Toast.makeText(this,"两次密码输入的不一致",Toast.LENGTH_SHORT).show();

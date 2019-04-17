@@ -10,8 +10,10 @@
     <color name="color_whiteblue">#6495ED</color>
     <color name="color_setTop">#FFB90F</color>
     <color name="color_item_delete">#FF0000</color>
-    <color name="color_item_press">#D1D1D1</color>
-    <color name="color_item_unpress">#ffffff</color>
+    <color name="color_item_press">#BFBFBF</color>
+    <color name="color_item_unpress">#FFFFFF</color>
+    <color name="color_icon_press">#BFBFBF</color>
+    <color name="color_icon_unpress">#F0F0F0</color>
     <color name="color_bg_fragment">#ffffff</color>
 
     <!-- common -->

@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="修改登录密码"
+                android:text="忘记密码"
                 android:textSize="25sp" />
 
         </RelativeLayout>
@@ -42,34 +42,36 @@
                 android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_account"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="15">
+                    android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/password"
+                        android:id="@+id/account"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="密码"
+                        android:hint="账  号"
                         android:imeActionId="6"
                         android:imeOptions="actionUnspecified"
-                        android:inputType="textPassword"
+                        android:inputType="text"
                         android:maxLines="1"
-                        android:singleLine="true"
-                        android:maxLength="15"/>
+                        android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_password"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="15">
 
                     <EditText
                         android:id="@+id/re_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="重复密码"
+                        android:hint="重设密码"
                         android:imeActionId="6"
                         android:imeOptions="actionUnspecified"
                         android:inputType="textPassword"

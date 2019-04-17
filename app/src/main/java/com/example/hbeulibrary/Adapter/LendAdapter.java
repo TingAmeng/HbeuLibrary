@@ -72,7 +72,7 @@ public class LendAdapter extends BaseSwipeAdapter {
         lendDate.setText(lend.getLendTime());
         lendStatus.setText(lend.getStatus());
 
-        SwipeLayout swipeLayout = (SwipeLayout) convertView.findViewById(getSwipeLayoutResourceId(position));
+        final SwipeLayout swipeLayout = (SwipeLayout) convertView.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addSwipeListener(new SimpleSwipeListener(){
             @Override
             public void onOpen(SwipeLayout layout) {
@@ -82,7 +82,8 @@ public class LendAdapter extends BaseSwipeAdapter {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext,"删除 "+lend.getBookName(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext,"删除 "+lend.getBookName(),Toast.LENGTH_SHORT).show();
+                swipeLayout.close();
                 if (lend.getStatus().equals("已借")) {
                     //调用QMUI的消息框
                     new QMUIDialog.MessageDialogBuilder(mContext)
@@ -104,27 +105,25 @@ public class LendAdapter extends BaseSwipeAdapter {
                 if (position == 0) {
                     Toast.makeText(mContext, "已经置顶 " + lend.getBookName(), Toast.LENGTH_SHORT).show();
                 } else {
-                    mLendList.remove(position);
-                    mLendList.add(0,lend);
-                    //将更新后的 mLendList 覆盖
-                    Gson gson = new Gson();
-                    String strJson = gson.toJson(mLendList); //将 list 转换为 json;
-                    SharedPreferences.Editor editor = mContext.getSharedPreferences
-                            ("user1_lend_data", Context.MODE_PRIVATE).edit();
-                    editor.putString("LEND_LIST",strJson);
-                    editor.apply();
-                    //重新刷新listView
-                    LendAdapter adapter = new LendAdapter(mContext,mLendList);
-                    adapter.notifyDataSetChanged();
+                    Lend lend1 = mLendList.get(0);
+                    lend1.setWeight(0);
+                    lend1.save();
+                    Lend lend2 = mLendList.get(position);
+                    lend2.setWeight(1);
+                    lend2.save();
                 }
+                swipeLayout.close();
+                LendFragment lendFragment = new LendFragment();
+                mLendList = lendFragment.getLendList();
+                notifyDataSetChanged();
             }
         });
-        swipeLayout.setOnClickListener(new View.OnClickListener() {
+        /*swipeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext,"查看 "+lend.getBookName(),Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
 
     }

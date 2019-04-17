@@ -1,5 +1,6 @@
 package com.example.hbeulibrary;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,9 +32,9 @@ public class MainActivity extends BaseActivity
 
     private BottomNavigationView mBottomNavigationView;
     private TextView mTitleTextView;
-    private ImageView searchButton;
-    private ImageView editButton;
-    private ImageView lendButton;
+    private ImageButton btnSearch;
+    private ImageButton btnEdit;
+    private ImageButton btnRefresh;
     private FrameLayout frameLayout;
     private Fragment[] mFragments;
     private int lastShowFragment = 0;
@@ -53,15 +55,22 @@ public class MainActivity extends BaseActivity
     private void initView(){
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
         mTitleTextView = (TextView) findViewById(R.id.title_text_view);
-        searchButton = (ImageView) findViewById(R.id.title_search_button);
-        editButton = (ImageView) findViewById(R.id.title_edit_button);
-        lendButton = (ImageView) findViewById(R.id.title_lend_button);
+        btnSearch = (ImageButton) findViewById(R.id.title_search_button);
+        btnEdit = (ImageButton) findViewById(R.id.title_edit_button);
+        btnRefresh = (ImageButton) findViewById(R.id.title_refresh_button);
         frameLayout = (FrameLayout) findViewById(R.id.frag_content);
-
+        //关闭 底部菜单栏动画
         BottomNavigationViewHelper.disableShiftMode(mBottomNavigationView);
     }
 
     private void initListener(){
+        /*btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frag_content,mFragments[2]).commit();
+            }
+        });*/
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
         //系统默认选中第一个,但是系统选中第一个不执行onNavigationItemSelected(MenuItem)方法,
         // 如果要求刚进入页面就执行clickTabOne()方法,则手动调用选中第一个
@@ -96,9 +105,9 @@ public class MainActivity extends BaseActivity
     // 点击 search
     private void clickTabOne(){
         mTitleTextView.setText("发现");
-        searchButton.setVisibility(View.VISIBLE);
-        editButton.setVisibility(View.GONE);
-        lendButton.setVisibility(View.GONE);
+        btnSearch.setVisibility(View.VISIBLE);
+        btnEdit.setVisibility(View.GONE);
+        btnRefresh.setVisibility(View.GONE);
         if (lastShowFragment != 0) {
             switchFragment(lastShowFragment,0);
             lastShowFragment =0;
@@ -109,9 +118,9 @@ public class MainActivity extends BaseActivity
     private void clickTabTwo(){
 
         mTitleTextView.setText("收藏");
-        searchButton.setVisibility(View.GONE);
-        lendButton.setVisibility(View.GONE);
-        editButton.setVisibility(View.VISIBLE);
+        btnSearch.setVisibility(View.GONE);
+        btnRefresh.setVisibility(View.GONE);
+        btnEdit.setVisibility(View.VISIBLE);
         if (lastShowFragment != 1) {
             switchFragment(lastShowFragment,1);
             lastShowFragment = 1;
@@ -120,9 +129,9 @@ public class MainActivity extends BaseActivity
     // 点击 lend
     private void clickTabThree(){
         mTitleTextView.setText("借阅");
-        editButton.setVisibility(View.GONE);
-        lendButton.setVisibility(View.VISIBLE);
-        searchButton.setVisibility(View.GONE);
+        btnEdit.setVisibility(View.GONE);
+        btnRefresh.setVisibility(View.VISIBLE);
+        btnSearch.setVisibility(View.GONE);
         if (lastShowFragment != 2) {
             switchFragment(lastShowFragment,2);
             lastShowFragment = 2;
@@ -131,9 +140,9 @@ public class MainActivity extends BaseActivity
     // 点击  my
     private void clickTabFour(){
         mTitleTextView.setText("我");
-        lendButton.setVisibility(View.GONE);
-        editButton.setVisibility(View.GONE);
-        searchButton.setVisibility(View.GONE);
+        btnRefresh.setVisibility(View.GONE);
+        btnEdit.setVisibility(View.GONE);
+        btnSearch.setVisibility(View.GONE);
         if (lastShowFragment != 3) {
             switchFragment(lastShowFragment,3);
             lastShowFragment = 3;
@@ -170,12 +179,6 @@ public class MainActivity extends BaseActivity
         //默认选中第一个
         FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
                 fm.add(R.id.frag_content,searchFragment)
-                        .add(R.id.frag_content,collectFragment)
-                        .add(R.id.frag_content,lendFragment)
-                        .add(R.id.frag_content,myFragment)
-                        .hide(collectFragment)
-                        .hide(lendFragment)
-                        .hide(myFragment)
                         .show(searchFragment)
                         .commit();
     }
@@ -194,7 +197,8 @@ public class MainActivity extends BaseActivity
         /*if (!mFragments[index].isAdded()) {
             transaction.add(R.id.frag_content,mFragments[index]);
         }*/
-        transaction.show(mFragments[index]).commit();
+        transaction.replace(R.id.frag_content,mFragments[index]).commit();
     }
+
 
 }

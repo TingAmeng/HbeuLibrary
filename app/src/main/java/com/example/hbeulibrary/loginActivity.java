@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.hbeulibrary.DB.Book;
 import com.example.hbeulibrary.DB.InitDB;
 import com.example.hbeulibrary.DB.User;
+import com.example.hbeulibrary.Util.BaseActivity;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -27,7 +28,7 @@ import java.util.List;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
-public class loginActivity extends AppCompatActivity implements View.OnClickListener {
+public class loginActivity extends BaseActivity implements View.OnClickListener {
     private AutoCompleteTextView textAccount;
     private EditText textPassword;
     private CheckBox checkPwd;
@@ -67,14 +68,15 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-
                 checkLogin();
                 break;
             case R.id.forget_pwd:
-                Toast.makeText(this,"忘记密码",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"忘记密码",Toast.LENGTH_SHORT).show();
+                goFoget();
                 break;
             case R.id.sign_in:
-                Toast.makeText(this,"申请注册",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"申请注册",Toast.LENGTH_SHORT).show();
+                goRepwd();
                 break;
             default:
                 break;
@@ -164,5 +166,15 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
         if (LitePal.findFirst(Book.class) == null) {
             InitDB.initDB();
         }
+    }
+
+    private void goFoget(){
+        Intent intent = new Intent(this,ForgetPwdActivity.class);
+        startActivity(intent);
+    }
+
+    private void goRepwd(){
+        Intent intent = new Intent(this,RegisterActivity.class);
+        startActivity(intent);
     }
 }

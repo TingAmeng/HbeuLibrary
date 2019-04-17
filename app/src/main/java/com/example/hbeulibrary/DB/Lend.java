@@ -6,10 +6,11 @@ public class Lend extends LitePalSupport {
     private int id;
     private int userId;
     private int bookId;
+    private int weight;         // 置顶权重
     private String bookName;
     private String bookAuthor;
     private String lendTime;
-    private String status;
+    private String status;     //借书状态
 
     public int getId() {
         return id;
@@ -64,5 +65,13 @@ public class Lend extends LitePalSupport {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 }

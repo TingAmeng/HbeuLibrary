@@ -265,6 +265,7 @@ public class BookMassageActivity extends AppCompatActivity implements View.OnCli
         String time = sdf.format(mDate);
         lend.setUserId(1);
         lend.setBookId(book.getId());
+        lend.setWeight(0);
         lend.setBookName(book.getBookName());
         lend.setBookAuthor(book.getBookAuthor());
         lend.setLendTime(time);

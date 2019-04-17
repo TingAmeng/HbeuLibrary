@@ -25,13 +25,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="修改登录密码"
+                android:text="账号注册登录"
                 android:textSize="25sp" />
 
         </RelativeLayout>
 
         <ScrollView
-            android:id="@+id/login_form"
             android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -42,34 +41,38 @@
                 android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_account"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:counterEnabled="true"
-                    app:counterMaxLength="15">
+                    app:counterMaxLength="10">
+
+                    <EditText
+                        android:id="@+id/account"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="账  号"
+                        android:imeActionId="6"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="15"
+                    app:passwordToggleEnabled="true">
 
                     <EditText
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="密码"
-                        android:imeActionId="6"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:maxLength="15"/>
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/re_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="重复密码"
+                        android:hint="密  码"
                         android:imeActionId="6"
                         android:imeOptions="actionUnspecified"
                         android:inputType="textPassword"
@@ -83,7 +86,7 @@
                     android:layout_height="wrap_content">
 
                     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                        android:id="@+id/btn_set"
+                        android:id="@+id/btn_login"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -91,7 +94,7 @@
                         android:layout_centerHorizontal="true"
                         android:padding="10dp"
                         android:layout_marginTop="20dp"
-                        android:text="确  认"
+                        android:text="注册并登录"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         app:qmui_backgroundColor="@color/app_color_blue"

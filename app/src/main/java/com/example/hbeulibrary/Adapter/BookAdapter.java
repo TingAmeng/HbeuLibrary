@@ -64,24 +64,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             public void onClick(View v) {
                 int position = viewHolder.getAdapterPosition();
                 Book book = mBookList.get(position);
-                Toast.makeText(v.getContext(),book.getBookName(),
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(),book.getBookName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, BookMassageActivity.class);
-//                intent.putExtra("book_name",book.getBookName());
-//                intent.putExtra("book_imageid",book.getBookImageId());
                 intent.putExtra("book_data",book);
                 mContext.startActivity(intent);
             }
         });
-        //点击item中的图片时
-        /*viewHolder.bookImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = viewHolder.getAdapterPosition();
-                Book book = mBookList.get(position);
-                Toast.makeText(v.getContext(),book.getBookImageId(),Toast.LENGTH_SHORT).show();
-            }
-        });*/
         return viewHolder;
     }
 
