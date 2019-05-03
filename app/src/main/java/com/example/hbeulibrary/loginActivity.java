@@ -76,7 +76,7 @@ public class loginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.sign_in:
                 //Toast.makeText(this,"申请注册",Toast.LENGTH_SHORT).show();
-                goRepwd();
+                skipLogin();
                 break;
             default:
                 break;
@@ -175,6 +175,11 @@ public class loginActivity extends BaseActivity implements View.OnClickListener 
 
     private void goRepwd(){
         Intent intent = new Intent(this,RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    private void skipLogin(){
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 }

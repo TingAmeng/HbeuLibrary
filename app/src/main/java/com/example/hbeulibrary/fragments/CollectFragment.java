@@ -211,8 +211,8 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
     }
 
     /**
-     *
-     * 将list  中的元素的值 从大到小排序
+     * 将list  中的元素的值 从大到小排序（冒泡排序）
+     * 来解决删除错位的问题
      * */
     private void BubbleSort(List<Integer> list){
         if (list.size() >= 2) {

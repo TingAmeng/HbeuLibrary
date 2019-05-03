@@ -48,18 +48,25 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
     //初始化 GroupListView
     private void initGroupListView(){
+        QMUICommonListItemView myItem = mGroupListView1.createItemView(
+                ContextCompat.getDrawable(getContext(),R.drawable.ic_my_mesg),
+                "个人信息",null,
+                QMUICommonListItemView.HORIZONTAL,
+                QMUICommonListItemView.ACCESSORY_TYPE_NONE
+        );
+        myItem.setOrientation(QMUICommonListItemView.VERTICAL);
+        myItem.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         QMUICommonListItemView firstItem = mGroupListView1.createItemView(
                 ContextCompat.getDrawable(getContext(),R.drawable.ic_key),
                 "修改密码",null,
                 QMUICommonListItemView.HORIZONTAL,
                 QMUICommonListItemView.ACCESSORY_TYPE_NONE
         );
-        firstItem.setOrientation(QMUICommonListItemView.VERTICAL);
         firstItem.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
         QMUICommonListItemView secondItem = mGroupListView1.createItemView(
                 ContextCompat.getDrawable(getContext(),R.drawable.ic_exit),
-                "退出程序", null,
+                "注销登录", null,
                 QMUICommonListItemView.HORIZONTAL,
                 QMUICommonListItemView.ACCESSORY_TYPE_NONE
         );
@@ -91,7 +98,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         Intent intent = new Intent(getActivity(), RePwdActivity.class);
                         startActivity(intent);
 
-                    } else if (text.equals("退出程序")) {
+                    } else if (text.equals("注销登录")) {
                         //Toast.makeText(getContext(),"退出登录",Toast.LENGTH_SHORT).show();
                         ActivityCollector.finishAll();
 
@@ -100,7 +107,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
                     } else if (text.equals("关于")) {
                         Toast.makeText(getContext(),"关于",Toast.LENGTH_SHORT).show();
-
+                    }else if (text.equals("个人信息")) {
+                        Toast.makeText(getContext(),"个人信息",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -109,6 +117,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         QMUIGroupListView.newSection(getContext())
                 .setTitle("")
                 .setLeftIconSize(size,ViewGroup.LayoutParams.WRAP_CONTENT)
+                .addItemView(myItem,onClickListener)
                 .addItemView(firstItem,onClickListener)
                 .addItemView(secondItem,onClickListener)
                 .addItemView(thirdItem,onClickListener)

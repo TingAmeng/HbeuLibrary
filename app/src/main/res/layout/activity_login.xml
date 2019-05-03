@@ -122,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="没有账号？" />
+                    android:text="跳过登录" />
             </RelativeLayout>
 
         </LinearLayout>
