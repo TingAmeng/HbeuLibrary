@@ -1,4 +1,4 @@
-package com.example.hbeulibrary.fragments;
+package com.example.hbeulibrary.View.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,21 +11,31 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hbeulibrary.Presenter.IUserPresenter;
+import com.example.hbeulibrary.Presenter.Impl.UserPresenterImpl;
 import com.example.hbeulibrary.R;
-import com.example.hbeulibrary.RePwdActivity;
 import com.example.hbeulibrary.Util.ActivityCollector;
+import com.example.hbeulibrary.View.IMyView;
+import com.example.hbeulibrary.View.Activities.RePwdActivity;
+import com.example.hbeulibrary.View.Activities.loginActivity;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
-public class MyFragment extends Fragment implements View.OnClickListener {
+public class MyFragment extends Fragment implements View.OnClickListener, IMyView {
 
     private QMUIRadiusImageView MyImage;
     private QMUIGroupListView mGroupListView1;
     private ConstraintLayout cs;
     private TextView userName;
 
+    private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+    private QMUITipDialog tipDialog;
+    IUserPresenter userPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +51,11 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         userName = (TextView) view.findViewById(R.id.user_name);
 
         initGroupListView();
+        userPresenter = new UserPresenterImpl(this);
+        tipDialog = new QMUITipDialog.Builder(getActivity())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在退出...")
+                .create();
         cs.setOnClickListener(this);
         return view;
     }
@@ -48,18 +63,25 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
     //初始化 GroupListView
     private void initGroupListView(){
+        QMUICommonListItemView myItem = mGroupListView1.createItemView(
+                ContextCompat.getDrawable(getContext(),R.drawable.ic_my_mesg),
+                "查看个人信息",null,
+                QMUICommonListItemView.HORIZONTAL,
+                QMUICommonListItemView.ACCESSORY_TYPE_NONE
+        );
+        myItem.setOrientation(QMUICommonListItemView.VERTICAL);
+        myItem.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         QMUICommonListItemView firstItem = mGroupListView1.createItemView(
                 ContextCompat.getDrawable(getContext(),R.drawable.ic_key),
                 "修改密码",null,
                 QMUICommonListItemView.HORIZONTAL,
                 QMUICommonListItemView.ACCESSORY_TYPE_NONE
         );
-        firstItem.setOrientation(QMUICommonListItemView.VERTICAL);
         firstItem.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
         QMUICommonListItemView secondItem = mGroupListView1.createItemView(
                 ContextCompat.getDrawable(getContext(),R.drawable.ic_exit),
-                "退出程序", null,
+                "注销登录", null,
                 QMUICommonListItemView.HORIZONTAL,
                 QMUICommonListItemView.ACCESSORY_TYPE_NONE
         );
@@ -91,9 +113,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         Intent intent = new Intent(getActivity(), RePwdActivity.class);
                         startActivity(intent);
 
-                    } else if (text.equals("退出程序")) {
+                    } else if (text.equals("注销登录")) {
                         //Toast.makeText(getContext(),"退出登录",Toast.LENGTH_SHORT).show();
-                        ActivityCollector.finishAll();
+                        showConfirmMessageDialog();
+
 
                     } else if (text.equals("帮助与反馈")) {
                         Toast.makeText(getContext(),"帮助与反馈",Toast.LENGTH_SHORT).show();
@@ -101,6 +124,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                     } else if (text.equals("关于")) {
                         Toast.makeText(getContext(),"关于",Toast.LENGTH_SHORT).show();
 
+                    } else if (text.equals("个人信息")) {
+                        Toast.makeText(getContext(),"个人信息",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -109,11 +134,54 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         QMUIGroupListView.newSection(getContext())
                 .setTitle("")
                 .setLeftIconSize(size,ViewGroup.LayoutParams.WRAP_CONTENT)
+                .addItemView(myItem,onClickListener)
                 .addItemView(firstItem,onClickListener)
                 .addItemView(secondItem,onClickListener)
                 .addItemView(thirdItem,onClickListener)
                 .addItemView(fourItem,onClickListener)
                 .addTo(mGroupListView1);
+    }
+    //含复选框的提示框
+    private void showConfirmMessageDialog() {
+        final QMUIDialog.CheckBoxMessageDialogBuilder qmuiCheckDialog = new QMUIDialog.CheckBoxMessageDialogBuilder(getActivity());
+                qmuiCheckDialog.setTitle("注销后是否删除账号信息?")
+                .setMessage("删除账号信息")
+                .setChecked(true)
+                .setCancelable(false)
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction("退出", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        if (qmuiCheckDialog.isChecked()) {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            userPresenter.deleteUser(getActivity());
+                                        }
+                                    });
+                                }
+                            }).start();
+
+                            goLogin();
+                        } else {
+                            goLogin();
+                        }
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
     }
 
     @Override
@@ -125,5 +193,26 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void showDialog() {
+        if (null != tipDialog && !tipDialog.isShowing()) {
+            tipDialog.show();
+        }
+    }
+
+    @Override
+    public void dismissDialog() {
+        if (null != tipDialog && tipDialog.isShowing()) {
+            tipDialog.dismiss();
+        }
+    }
+
+    private void goLogin() {
+        ActivityCollector.finishAll();
+        Intent intent = new Intent(getActivity(),loginActivity.class);
+        startActivity(intent);
+
     }
 }

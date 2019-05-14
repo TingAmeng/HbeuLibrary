@@ -1,4 +1,4 @@
-package com.example.hbeulibrary.fragments;
+package com.example.hbeulibrary.View.Fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -33,6 +33,8 @@ public class LendFragment extends Fragment {
     private Context mContext;
     private ImageButton btnRefresh;
 
+    private int userId;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +48,9 @@ public class LendFragment extends Fragment {
         TextView lendTextView = (TextView) view.findViewById(R.id.lend_text_view);
         btnRefresh = (ImageButton) getActivity().findViewById(R.id.title_refresh_button);
 
+
         initList(); // 在Lend表中查询到 借书记录， 添加到mLendList中
+
         if (mLendList.isEmpty()) {
            lendTextView.setVisibility(View.VISIBLE);
 
@@ -71,20 +75,26 @@ public class LendFragment extends Fragment {
 
 
     private void initList(){
-        mLendList = LitePal.where("userid = ?", "1")
+        MyApplication myApplication = new MyApplication();
+        userId = myApplication.getUserId();
+
+        mLendList = LitePal.where("userid = ?", Integer.toString(userId))
                 .find(Lend.class);
-        Lend lend1 = new Lend();
-        for (Lend lend : mLendList) {
-            //跳过 Lend 表中的第一个
-                if (lend.getWeight() == 1) {
-                    lend1 = lend;   //获得  weight == 1 的 lend
 
-                }
+            Lend lend1 = new Lend();
+        //跳过 Lend 表中的第一个
+        for (int i=1;i<mLendList.size();i++) {
 
+            Lend lend = mLendList.get(i);
+
+            if (lend.getWeight() == 1) {
+                lend1 = lend;   //获得  weight == 1 的 lend
+                //删除原来的lend
+                mLendList.remove(lend);
+                //将 lend1 插入 第一个
+                mLendList.add(0,lend1);
+            }
         }
-        mLendList.remove(lend1);
-        //将 lend1 插入 第一个
-        mLendList.add(0,lend1);
     }
 
     public List<Lend> getLendList() {

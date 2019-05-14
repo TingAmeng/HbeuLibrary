@@ -9,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.hbeulibrary.BookMassageActivity;
+import com.example.hbeulibrary.View.Activities.BookMassageActivity;
 import com.example.hbeulibrary.DB.Book;
 import com.example.hbeulibrary.R;
-import com.example.hbeulibrary.Util.MyApplication;
 
 import java.util.List;
 
@@ -66,7 +64,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
                 Book book = mBookList.get(position);
                 //Toast.makeText(v.getContext(),book.getBookName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, BookMassageActivity.class);
-                intent.putExtra("book_data",book);
+                intent.putExtra("bookid",book.getId());
                 mContext.startActivity(intent);
             }
         });

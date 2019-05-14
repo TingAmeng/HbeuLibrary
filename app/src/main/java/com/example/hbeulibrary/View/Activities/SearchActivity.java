@@ -1,4 +1,4 @@
-package com.example.hbeulibrary;
+package com.example.hbeulibrary.View.Activities;
 
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.hbeulibrary.Adapter.BookAdapter;
 import com.example.hbeulibrary.DB.Book;
+import com.example.hbeulibrary.R;
 import com.example.hbeulibrary.Util.ItemDivider;
 import com.example.hbeulibrary.Util.Search_EditText;
 

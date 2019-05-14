@@ -1,4 +1,4 @@
-package com.example.hbeulibrary;
+package com.example.hbeulibrary.View.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.hbeulibrary.DB.User;
+import com.example.hbeulibrary.R;
 import com.example.hbeulibrary.Util.ActivityCollector;
 import com.example.hbeulibrary.Util.BaseActivity;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;

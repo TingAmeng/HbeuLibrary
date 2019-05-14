@@ -16,13 +16,13 @@
         android:layout_height="80dp">
 
         <TextView
-            android:id="@+id/lend_delete"
+            android:id="@+id/lend_again"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:text="删  除"
+            android:text="续  借"
             android:textColor="@color/whiteText"
             android:textSize="20sp"
-            android:background="@color/color_item_delete"
+            android:background="@color/app_color_blue"
             android:clickable="true"
             android:gravity="center"/>
 
@@ -72,17 +72,41 @@
                 swipe:layout_constraintTop_toBottomOf="@+id/lend_book_name"
                 swipe:layout_constraintLeft_toLeftOf="parent"/>
 
-            <TextView
-                android:id="@+id/lend_date"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2019-4-8"
-                android:textSize="10sp"
                 swipe:layout_constraintRight_toRightOf="parent"
                 swipe:layout_constraintTop_toTopOf="parent"
-                swipe:layout_constraintBottom_toBottomOf="parent"/>
+                swipe:layout_constraintBottom_toBottomOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="借书日期："
+                    android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/lend_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2019年4月8日"
+                    android:textSize="10sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="到期时间："
+                    android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/return_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2019年5月8日"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>
+
 
         <TextView
             android:id="@+id/lend_status"

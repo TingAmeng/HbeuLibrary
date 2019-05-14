@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyApplication extends Application {
-    public static Context context;
+    private static Context context;
+    private static int userId;
 
     @Override
     public void onCreate() {
@@ -27,4 +28,11 @@ public class MyApplication extends Application {
         return context;
     }
 
+    public static int getUserId() {
+        return userId;
+    }
+
+    public  void setUserId(int userId) {
+        this.userId = userId;
+    }
 }

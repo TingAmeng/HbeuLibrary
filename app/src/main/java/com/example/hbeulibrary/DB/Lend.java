@@ -9,8 +9,11 @@ public class Lend extends LitePalSupport {
     private int weight;         // 置顶权重
     private String bookName;
     private String bookAuthor;
-    private String lendTime;
+    private String lendDate;
+    private String returnDate;
     private String status;     //借书状态
+    private int lendTimes;
+
 
     public int getId() {
         return id;
@@ -51,12 +54,20 @@ public class Lend extends LitePalSupport {
         this.bookAuthor = bookAuthor;
     }
 
-    public String getLendTime() {
-        return lendTime;
+    public String getLendDate() {
+        return lendDate;
     }
 
-    public void setLendTime(String lendTime) {
-        this.lendTime = lendTime;
+    public void setLendDate(String lendDate) {
+        this.lendDate = lendDate;
+    }
+
+    public String getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
     }
 
     public String getStatus() {
@@ -73,5 +84,13 @@ public class Lend extends LitePalSupport {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public int getLendTimes() {
+        return lendTimes;
+    }
+
+    public void setLendTimes(int lendTimes) {
+        this.lendTimes = lendTimes;
     }
 }

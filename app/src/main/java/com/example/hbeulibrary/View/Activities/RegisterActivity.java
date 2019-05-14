@@ -1,9 +1,8 @@
-package com.example.hbeulibrary;
+package com.example.hbeulibrary.View.Activities;
 
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -12,8 +11,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.hbeulibrary.DB.User;
+import com.example.hbeulibrary.R;
 import com.example.hbeulibrary.Util.ActivityCollector;
 import com.example.hbeulibrary.Util.BaseActivity;
+import com.example.hbeulibrary.View.MainActivity;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -106,7 +107,7 @@ public class RegisterActivity extends BaseActivity {
                         @Override
                         public void run() {
                             tipDialog2.dismiss();
-                            Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                             startActivity(intent);
                             ActivityCollector.finishAll();
                         }

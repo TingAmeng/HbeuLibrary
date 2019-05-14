@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <litepal>
     <dbname value="HbeuLibrary"></dbname>
-    <version value="4"></version>
+    <version value="5"></version>
     <list>
         <mapping class="com.example.hbeulibrary.DB.Book"></mapping>
         <mapping class="com.example.hbeulibrary.DB.Lend"></mapping>

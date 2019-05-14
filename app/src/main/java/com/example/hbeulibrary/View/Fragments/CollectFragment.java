@@ -1,4 +1,4 @@
-package com.example.hbeulibrary.fragments;
+package com.example.hbeulibrary.View.Fragments;
 
 import android.app.Application;
 import android.content.Context;
@@ -36,7 +36,7 @@ import java.util.Map;
 public class CollectFragment extends Fragment implements View.OnClickListener{
     //LinkedHashMap() 存入数据和取出数据顺序一致，而HashMap()不行
     private Map<String,?> map = new LinkedHashMap<>();
-    SharedPreferences pref;
+    private int userId;
 
     private List<Book> bookList = new ArrayList<>();
     private List<String> deList = new ArrayList<>();
@@ -79,6 +79,9 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
         cancelButton.setOnClickListener(this);
         selAllBtn.setOnClickListener(this);
         delBtn.setOnClickListener(this);
+
+        MyApplication myApplication = new MyApplication();
+        userId = myApplication.getUserId();
 
         bookList.clear();//清空list数据 ，避免重复加载
         //瀑布流布局,两个参数（布局的列数，排列方向）
@@ -152,18 +155,14 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
         long[] ids = new long[20];
         int i =0;
         //实例化pref文件
-        pref = getActivity().getSharedPreferences
-                ("user1collect", Context.MODE_PRIVATE);
+        SharedPreferences pref = getActivity().getSharedPreferences
+                ("user"+Integer.toString(userId)+"collect", Context.MODE_PRIVATE);
         //将文件的键值对赋值给 Map对象
-        if (pref.getInt("userid",0) == 1) {
-
-            map = pref.getAll();
-            map.remove("userid");
-            //遍历Map对象，
-            for (String key : map.keySet()) {
-                ids[i] = Integer.parseInt(map.get(key).toString());
-                i++;
-            }
+        map = pref.getAll();
+        //遍历Map对象，
+        for (String key : map.keySet()) {
+            ids[i] = Integer.parseInt(map.get(key).toString());
+            i++;
         }
         //获得 收藏 中的 Book实例，并放入bookList
         bookList.clear();
@@ -174,7 +173,7 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
     public void delCollect() {
         deList = adapter.getDeList();
         deListPosition = adapter.ItemPositionList();
-        editor = getActivity().getSharedPreferences("user1collect",Context.MODE_PRIVATE).edit();
+        editor = getActivity().getSharedPreferences("user"+Integer.toString(userId)+"collect",Context.MODE_PRIVATE).edit();
         for (int i = 0; i < deList.size(); i++) {
             editor.remove(deList.get(i));
         }
@@ -190,17 +189,6 @@ public class CollectFragment extends Fragment implements View.OnClickListener{
         }
 
 
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("TAG", "onResume ");
     }
 
 

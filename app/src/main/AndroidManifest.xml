@@ -2,26 +2,32 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hbeulibrary">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
         android:name=".Util.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchActivity"></activity>
+        <service
+            android:name=".View.NotifyService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+        <activity android:name=".View.Activities.SearchActivity"></activity>
         <activity
-            android:name=".ForgetPwdActivity"
+            android:name=".View.Activities.ForgetPwdActivity"
             android:label="@string/title_activity_reset" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".View.Activities.RegisterActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".RePwdActivity"
+            android:name=".View.Activities.RePwdActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".loginActivity"
+            android:name=".View.Activities.loginActivity"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,8 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BookMassageActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".View.Activities.BookMassageActivity" />
+        <activity android:name=".View.MainActivity" />
     </application>
 
 </manifest>

@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import com.example.hbeulibrary.R;
-import com.example.hbeulibrary.SearchActivity;
 
 public class Search_EditText extends android.support.v7.widget.AppCompatEditText {
 

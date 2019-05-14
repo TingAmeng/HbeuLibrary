@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    tools:context=".loginActivity">
+    tools:context=".View.Activities.loginActivity">
 
 
     <RelativeLayout
@@ -118,11 +118,11 @@
                     android:text="忘记密码？"/>
 
                 <TextView
-                    android:id="@+id/sign_in"
+                    android:id="@+id/skip_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="没有账号？" />
+                    android:text="跳过登录" />
             </RelativeLayout>
 
         </LinearLayout>

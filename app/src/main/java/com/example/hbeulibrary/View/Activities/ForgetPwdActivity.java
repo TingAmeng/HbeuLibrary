@@ -1,8 +1,7 @@
-package com.example.hbeulibrary;
+package com.example.hbeulibrary.View.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.hbeulibrary.DB.User;
+import com.example.hbeulibrary.R;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;

@@ -2,31 +2,24 @@ package com.example.hbeulibrary.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.hbeulibrary.BookMassageActivity;
+import com.example.hbeulibrary.View.Activities.BookMassageActivity;
 import com.example.hbeulibrary.DB.Book;
-import com.example.hbeulibrary.MainActivity;
 import com.example.hbeulibrary.R;
-import com.example.hbeulibrary.Util.MyApplication;
-import com.example.hbeulibrary.fragments.CollectFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.ViewHolder> {
     private List<Book> mBookList;

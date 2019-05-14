@@ -1,13 +1,15 @@
-package com.example.hbeulibrary;
+package com.example.hbeulibrary.View;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-
 
 import android.view.MenuItem;
 import android.view.View;
@@ -15,17 +17,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.example.hbeulibrary.R;
 import com.example.hbeulibrary.Util.BaseActivity;
 import com.example.hbeulibrary.Util.BottomNavigationViewHelper;
-import com.example.hbeulibrary.fragments.CollectFragment;
-import com.example.hbeulibrary.fragments.LendFragment;
-import com.example.hbeulibrary.fragments.MyFragment;
-import com.example.hbeulibrary.fragments.SearchFragment;
-
-import org.litepal.LitePal;
+import com.example.hbeulibrary.View.Fragments.CollectFragment;
+import com.example.hbeulibrary.View.Fragments.LendFragment;
+import com.example.hbeulibrary.View.Fragments.MyFragment;
+import com.example.hbeulibrary.View.Fragments.SearchFragment;
 
 public class MainActivity extends BaseActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -39,6 +38,25 @@ public class MainActivity extends BaseActivity
     private Fragment[] mFragments;
     private int lastShowFragment = 0;
 
+
+    private NotifyService.CheckLendBinder checkLendBinder;
+
+    //创建一个ServiceConnection的匿名类。
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        //绑定服务成功的时候调用此方法
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            //得到一个Binder实例，用来关联服务，指挥服务进行相应的任务
+            checkLendBinder = (NotifyService.CheckLendBinder) service;
+            checkLendBinder.startNotify();
+        }
+
+        @Override
+        //与服务连接断开的时候调用此方法
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +65,11 @@ public class MainActivity extends BaseActivity
         setTitle();   //设置沉浸式标题栏
         initView();  //初始化空间
         initListener();   //初始化监听器
+        //启动服务
+        Intent bindIntent = new Intent(this,NotifyService.class);
+        // 绑定服务，让活动与服务之间进行通信
+        bindService(bindIntent,connection,BIND_AUTO_CREATE);
+
         initFragment();   // 初始化Fragments
 
 
@@ -64,13 +87,6 @@ public class MainActivity extends BaseActivity
     }
 
     private void initListener(){
-        /*btnRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frag_content,mFragments[2]).commit();
-            }
-        });*/
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
         //系统默认选中第一个,但是系统选中第一个不执行onNavigationItemSelected(MenuItem)方法,
         // 如果要求刚进入页面就执行clickTabOne()方法,则手动调用选中第一个
@@ -201,4 +217,9 @@ public class MainActivity extends BaseActivity
     }
 
 
+    @Override
+    protected void onDestroy() {
+        unbindService(connection);
+        super.onDestroy();
+    }
 }
